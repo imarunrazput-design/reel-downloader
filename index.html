@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Instagram Reel Downloader</title>
+<style>
+body{font-family:sans-serif;padding:20px;background:#f7f7f7}
+input,button{padding:10px;margin:5px 0;width:100%;max-width:500px;border-radius:5px}
+button{cursor:pointer;background:#111;color:#fff;border:none}
+.result{margin-top:10px;background:#fff;padding:10px;border-radius:5px}
+</style>
+</head>
+<body>
+<h2>One-Click Instagram Reel Downloader</h2>
+<input id="url" placeholder="Paste Instagram Reel URL"/>
+<button id="go">Download</button>
+<div id="status"></div>
+<div id="result" class="result"></div>
+
+<script>
+const go=document.getElementById('go');
+const urlInput=document.getElementById('url');
+const status=document.getElementById('status');
+const result=document.getElementById('result');
+
+go.onclick=async()=>{
+  const url=urlInput.value.trim();
+  if(!url){status.textContent='Paste a URL'; return;}
+  status.textContent='Processing...';
+  try{
+    const resp=await fetch('https://instagram-reels-downloader-api.p.rapidapi.com/download?url='+encodeURIComponent(url),{
+      method:'GET',
+      headers:{
+        'X-RapidAPI-Key':'b1792a54a3msh86938f87bf7bd6fp16bda1jsn9f6d626efbaa',
+        'X-RapidAPI-Host':'instagram-reels-downloader-api.p.rapidapi.com'
+      }
+    });
+    const data=await resp.json();
+    if(!data.media_url){status.textContent='Download failed'; return;}
+    const a=document.createElement('a'); a.href=data.media_url; a.download='reel.mp4'; a.click();
+    status.textContent='Download started';
+    result.innerHTML=`<a href="${data.media_url}" target="_blank">Click if download didn't start</a>`;
+  }catch(e){status.textContent='Server error';}
+};
+</script>
+</body>
+</html>
