@@ -1,3 +1,5 @@
+// index.js
+require('dotenv').config(); // .env support
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
@@ -7,21 +9,22 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const RAPIDAPI_KEY = process.b1792a54a3msh86938f87bf7bd6fp16bda1jsn9f6d626efbaa
-;
-const RAPIDAPI_HOST = "instagram-reels-downloader-api.p.rapidapi.com";
+const RAPIDAPI_KEY = process.env.b1792a54a3msh86938f87bf7bd6fp16bda1jsn9f6d626efbaa;
+const RAPIDAPI_HOST = "instagram-reels-downloader-api.p.rapidapi.com"; // correct host
 
-// Root route (homepage test)
+// Root route (simple test)
 app.get("/", (req, res) => {
   res.send("Backend is working 🚀");
 });
+
 // Reel download route
 app.get('/download', async (req, res) => {
   const reelUrl = req.query.url;
   if (!reelUrl) return res.status(400).send("URL missing");
+
   try {
-    const response = await axios.get(`https://${RAPIDAPI_HOST}/reel`, {
-      params: { url: encodeURIComponent(reelUrl) },
+    const response = await axios.get(`https://${RAPIDAPI_HOST}/download`, {
+      params: { url: encodeURIComponent(reelUrl) }, // encode URL
       headers: {
         'X-RapidAPI-Key': RAPIDAPI_KEY,
         'X-RapidAPI-Host': RAPIDAPI_HOST
@@ -29,11 +32,10 @@ app.get('/download', async (req, res) => {
     });
 
     res.json(response.data);
-  catch (err) {
-  console.error("❌ Error details:", err.response?.data || err.message);
-  res.status(500).json({ error: err.response?.data || err.message });
-}
 
+  } catch (err) {
+    console.error("❌ Error details:", err.response?.data || err.message);
+    res.status(500).json({ error: err.response?.data || err.message });
   }
 });
 
