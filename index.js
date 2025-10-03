@@ -7,7 +7,8 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
+const RAPIDAPI_KEY = process.b1792a54a3msh86938f87bf7bd6fp16bda1jsn9f6d626efbaa
+;
 const RAPIDAPI_HOST = "instagram-downloader-api.p.rapidapi.com";
 
 // Root route (homepage test)
