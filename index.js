@@ -1,3 +1,6 @@
+app.get("/", (req, res) => {
+  res.send("Backend is working 🚀");
+});
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
