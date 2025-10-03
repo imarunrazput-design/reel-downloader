@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
-const RAPIDAPI_KEY = process.env.b1792a54a3msh86938f87bf7bd6fp16bda1jsn9f6d626efbaa;
+const RAPIDAPI_KEY = process.env.RAPIDAPI_KEY;
 const RAPIDAPI_HOST = "instagram-reels-downloader-api.p.rapidapi.com"; // correct host
 
 // Root route (simple test)
